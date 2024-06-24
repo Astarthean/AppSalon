@@ -1,0 +1,19 @@
+{
+    "name": "anabc/app-salon",
+    "description": "Proyecto PHP, MVC, SASS, Gulp",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "./",
+            "Controllers\\": "./controllers",
+            "Model\\": "./models"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ana",
+            "email": "asakalieu@gmail.com"
+        }
+    ],
+    "require": {}
+}
