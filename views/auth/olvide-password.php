@@ -8,7 +8,7 @@
         <input type="email" id="email" name="email" placeholder="Tu email">
     </div>
 
-    <input type="sumbit" class="boton" value="Enviar">
+    <input type="submit" class="boton" value="Enviar">
 </form>
 
 <div class="acciones">

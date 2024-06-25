@@ -22,5 +22,10 @@ $router->post('/recuperar', [LoginController::class, 'recuperar']);
 $router->get('/crear-cuenta', [LoginController::class, 'crearCuenta']);
 $router->post('/crear-cuenta', [LoginController::class, 'crearCuenta']);
 
+//Confirmar cuenta
+$router->get('/confirmar-cuenta', [LoginController::class, 'confirmar']);
+
+$router->get('/mensaje', [LoginController::class, 'mensaje']);
+
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();
