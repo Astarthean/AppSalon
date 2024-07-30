@@ -33,9 +33,10 @@
                 <label for="hora">Hora</label>
                 <input type="time" id="hora" name="hora">
             </div>
+
+            <input type="hidden" id="id" value=" <?php echo $id; ?> ">
         </form>
     </div>
-
 
     <div class="seccion contenido-resumen" id="paso-3">
         <h2>Resumen de tu cita</h2>
@@ -53,7 +54,7 @@
 </div>
 
 <?php $script = "
-
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
     <script src='build/js/app.js'></script>
 
 " ?>

@@ -4,6 +4,7 @@ const pasoInicial = 1
 const pasoFinal = 3
 
 const cita = {
+    id: '',
     nombre: '',
     fecha: '',
     hora: '',
@@ -23,6 +24,7 @@ function iniciarApp() {
 
     consultarAPI(); //Consulta la API en el backend de PHP
 
+    idCliente()
     nombreCliente()
     seleccionarFecha()
     seleccionarHora()
@@ -161,6 +163,10 @@ function seleccionarServicio(servicio) {
     }
 }
 
+function idCliente() {
+    cita.id = document.querySelector('#id').value
+}
+
 function nombreCliente() {
     cita.nombre = document.querySelector('#nombre').value
 }
@@ -228,10 +234,10 @@ function mostrarResumen() {
     if (Object.values(cita).includes('') || cita.servicios.length === 0) {
         mostrarAlerta('Todos los campos son obligatorios', 'error', '.contenido-resumen', false)
         return
-    } 
+    }
 
     //Formatear el div de resumen
-    const {nombre, fecha, hora, servicios} = cita
+    const { nombre, fecha, hora, servicios } = cita
 
     //Headin para servicios en resumen
     const headingServicios = document.createElement('h3')
@@ -239,10 +245,10 @@ function mostrarResumen() {
     resumen.appendChild(headingServicios)
 
     servicios.forEach(servicio => {
-        const {id, precio, nombre} = servicio
+        const { id, precio, nombre } = servicio
         const contenedorServicio = document.createElement('div')
         contenedorServicio.classList.add('contenedor-servicio')
-        
+
         const textoServicio = document.createElement('p')
         textoServicio.textContent = nombre
 
@@ -269,7 +275,7 @@ function mostrarResumen() {
     const dia = fechaObj.getDate()
     const anno = fechaObj.getFullYear()
 
-    const opciones = {weekday: 'long', year: 'numeric', month: 'long', day:'numeric'}
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
     const fechaUTC = new Date(Date.UTC(anno, mes, dia))
     const fechaFormateada = fechaUTC.toLocaleDateString('es-ES', opciones)
 
@@ -291,6 +297,40 @@ function mostrarResumen() {
 
 }
 
-function reservarCita () {
-    
+async function reservarCita() {
+    const { nombre, fecha, hora, servicios, id } = cita
+    const idServicios = servicios.map(servicio => servicio.id)
+
+    const datos = new FormData()
+    datos.append('usuarioId', id)
+    datos.append('fecha', fecha)
+    datos.append('hora', hora)
+    datos.append('servicios', idServicios)
+
+    try {
+        //Peticion hacia la API
+        const url = 'http://localhost:3000/api/citas'
+
+        const respuesta = await fetch(url, {
+            method: 'POST',
+            body: datos
+        })
+
+        const resultado = await respuesta.json()
+        if (resultado.resultado) {
+            Swal.fire({
+                icon: "success",
+                title: "Cita Creada",
+                text: "Tu Cita fue creada correctamente"
+            }).then(() => {
+                window.location.reload()
+            })
+        }
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un error al guardar la cita"
+        });
+    }
 }
