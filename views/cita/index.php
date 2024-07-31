@@ -1,5 +1,10 @@
 <h1 class="nombre-pagina">Crear nueva cita</h1>
 
+<div class="barra">
+    <p>Hola: <?php echo $nombre ?? '' ;?></p>
+    <a class="boton" href="/logout">Cerrar Sesión</a>
+</div>
+
 <div class="app">
 
     <nav class="tabs">
