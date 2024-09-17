@@ -177,7 +177,7 @@ function seleccionarFecha() {
     inputFecha.addEventListener('input', function (e) {
         const dia = new Date(e.target.value).getUTCDay()
 
-        if ([0, 6].includes(dia)) {
+        if ([6, 0].includes(dia)) {
             e.target.value = ''
             mostrarAlerta('Fines de semana no abrimos', 'error', '.formulario')
         } else {

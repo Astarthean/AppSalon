@@ -1,19 +1,26 @@
 <h1 class="nombre-pagina">Panel de Administración</h1>
 
-<div class="barra">
-    <p>Hola: <?php echo $nombre ?? ''; ?></p>
-    <a class="boton" href="/logout">Cerrar Sesión</a>
-</div>
+<?php include_once __DIR__ . '/../templates/barra.php' ?>
 
 <h2>Buscar Citas</h2>
 <div class="busqueda">
     <form action="" class="formulario">
         <div class="campo">
             <label for="fecha">Fecha</label>
-            <input type="date" id="fecha" name="fecha">
+            <input
+                type="date"
+                id="fecha"
+                name="fecha"
+                value="<?php echo $fecha; ?>">
         </div>
     </form>
 </div>
+
+<?php
+if (count($citas) === 0) {
+    echo "<h2>No hay Citas en esta fecha</h2>";
+}
+?>
 
 <div id="citas-admin">
     <ul class="citas">
@@ -41,6 +48,18 @@
 
                 if (esUltimo($actual, $proximo)) { ?>
                     <p class="total">Total: <span><?php echo $total . "€"; ?></span></p>
+
+                    <form action="/api/eliminar" method="POST">
+                        <input
+                            type="hidden"
+                            name="id"
+                            value="<?php echo $cita->id; ?>">
+                        <input
+                            type="submit"
+                            class="boton-eliminar"
+                            value="Eliminar Cita">
+                    </form>
+
                 <?php
                 }
 
@@ -48,3 +67,5 @@
             <?php endforeach; ?>
     </ul>
 </div>
+
+<?php $script = "<script src='build/js/buscador.js'></script>"; ?>
